@@ -1,65 +1,40 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import axios from "../axios";
-import {
-  selectUserId,
-  setUserInfo,
-  selectProfileImg,
-  selectName,
-  selectUsername,
-  setSignOut,
-} from "../features/user/userSlice";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { auth } from "../firebase";
+import { useQuery } from "react-query";
+
+const fetchData = async () => {
+  const request = await axios.get(`getUserInfo/${auth.currentUser.uid}`);
+  const data = request.data[0];
+  return data;
+};
 
 function Profile() {
-  const dispatch = useDispatch();
+  const { data, status } = useQuery("userInfo", fetchData);
   const history = useHistory();
-  const userId = useSelector(selectUserId);
-  const profileImgUrl = useSelector(selectProfileImg);
-  const name = useSelector(selectName);
-  const username = useSelector(selectUsername);
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      async function fetchData() {
-        const request = await axios.get(`getUserInfo/${auth.currentUser.uid}`);
-        const data = request.data[0];
-
-        dispatch(
-          setUserInfo({
-            userId: data.user_id,
-            name: data.name,
-            email: data.email,
-            username: data.username,
-            profileImgUrl: data.profile_img_url,
-          })
-        );
-      }
-      fetchData();
-    }
-  }, [auth.currentUser]);
 
   const signOut = () => {
     auth.signOut().then(() => {
-      dispatch(setSignOut());
       history.push("/login");
     });
   };
 
   return (
     <Container>
-      <ProfileImg>{profileImgUrl && <img src={profileImgUrl} />}</ProfileImg>
-
-      <NameContainer>{name}</NameContainer>
-      <UsernameContainer>@{username}</UsernameContainer>
-
-      <MyAccountBtn>My Account</MyAccountBtn>
-
-      <SettingsBtn>Settings</SettingsBtn>
-
-      <LogOutBtn onClick={signOut}>Log Out</LogOutBtn>
+      {status === "success" && (
+        <>
+          <ProfileImg>
+            <img src={data.profile_img_url} />
+          </ProfileImg>
+          <NameContainer>{data.name}</NameContainer>
+          <UsernameContainer>@{data.username}</UsernameContainer>
+          <MyAccountBtn>My Account</MyAccountBtn>
+          <SettingsBtn>Settings</SettingsBtn>
+          <LogOutBtn onClick={signOut}>Log Out</LogOutBtn>
+        </>
+      )}
     </Container>
   );
 }
@@ -68,7 +43,7 @@ export default Profile;
 
 const Container = styled.div`
   /* background-color: orange; */
-  width: 300px;
+  width: 275px;
   height: 100%;
   display: flex;
   flex-direction: column;

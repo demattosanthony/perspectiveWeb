@@ -114,9 +114,10 @@ const LoginButton = styled.button`
   border-radius: 4px;
   margin-top: 40px;
   cursor: pointer;
+  transform: all 250ms;
 
   &:hover {
-    transform: scale(1.02);
+    transform: scale(1.08);
     border-color: rgba(249, 249, 249, 0.8);
   }
 `;

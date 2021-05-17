@@ -6,7 +6,6 @@ const initalState = {
   name: "",
   username: "",
   profileImgUrl: "",
-
 };
 
 const userSlice = createSlice({
@@ -27,7 +26,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.username = action.payload.username;
       state.profileImgUrl = action.payload.profileImgUrl;
-    }
+    },
   },
 });
 
@@ -35,6 +34,8 @@ export const { setUserLogin, setSignOut, setUserInfo } = userSlice.actions;
 
 export const selectUserEmail = (state) => state.user.email;
 export const selectUserId = (state) => state.user.userId;
+export const selectName = (state) => state.user.name;
+export const selectUsername = (state) => state.user.username;
 export const selectProfileImg = (state) => state.user.profileImgUrl;
 
 export default userSlice.reducer;

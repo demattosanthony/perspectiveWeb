@@ -100,6 +100,7 @@ const EmailTextField = styled.input`
   font-size: 18px;
   border-radius: 6px;
   border-color: #d3d3d3;
+  border: 1px solid;
 `;
 
 const PasswordTextField = styled(EmailTextField)``;

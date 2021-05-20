@@ -58,7 +58,7 @@ const Container = styled.div`
 const ProfileImg = styled.div`
   height: 150px;
   width: 150px;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   border-radius: 100px;
   overflow: hidden;
 

@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Header from "./components/Header";
+import AlbumView from "./components/albumViewComponents/AlbumView";
+import ImageView from "./components/albumViewComponents/ImageView";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -16,11 +17,16 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Switch>
+            <Route path="/image/">
+              <ImageView />
+            </Route>
+            <Route path="/album/:albumId/:title">
+              <AlbumView />
+            </Route>
             <Route path="/login">
               <Login />
             </Route>
             <Route path="/">
-              <Header />
               <Home />
             </Route>
           </Switch>

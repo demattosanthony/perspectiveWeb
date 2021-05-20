@@ -76,7 +76,7 @@ const Logo = styled.div`
   }
 
   h1 {
-    font-family: "Billabong", sans-serif;
+    font-family: "Billabong2";
     font-size: 75px;
     font-weight: 100;
 
@@ -99,8 +99,7 @@ const EmailTextField = styled.input`
   margin: 10px;
   font-size: 18px;
   border-radius: 6px;
-  border-color: #d3d3d3;
-  border: 1px solid;
+  border: 1px solid #d3d3d3;
 `;
 
 const PasswordTextField = styled(EmailTextField)``;

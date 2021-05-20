@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import Header from "./Header";
 import Profile from "./Profile";
 import MyAlbums from "./MyAlbums";
 import { auth } from "../firebase";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setSignOut, setUserLogin } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
+import { setUserLogin } from "../features/user/userSlice";
 
 function Home() {
   const history = useHistory();
@@ -16,7 +17,6 @@ function Home() {
       if (!user) {
         history.push("/login");
       } else {
-        // console.log(user);
         dispatch(
           setUserLogin({
             userId: user.uid,
@@ -29,8 +29,11 @@ function Home() {
 
   return (
     <Container>
-      <Profile />
-      <MyAlbums />
+      <Header />
+      <BodyContainer>
+        <Profile />
+        <MyAlbums />
+      </BodyContainer>
     </Container>
   );
 }
@@ -40,9 +43,17 @@ export default Home;
 const Container = styled.div`
   height: 100vh;
   display: flex;
+  flex-direction: column;
 
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
+const BodyContainer = styled.div`
+  display: flex;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;

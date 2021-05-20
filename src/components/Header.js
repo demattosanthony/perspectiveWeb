@@ -17,11 +17,10 @@ function Header() {
 export default Header;
 
 const Container = styled.div`
-  min-height: 60px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
   top: 0;
   right: 0;
   left: 0;
@@ -38,7 +37,7 @@ const Logo = styled.div`
   }
 
   h1 {
-    font-family: "Billabong", sans-serif;
+    font-family: "Billabong2";
     font-size: 32px;
     font-weight: 100;
     margin-left: 10px;

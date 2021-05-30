@@ -113,7 +113,7 @@ const LoginButton = styled.button`
   border-radius: 4px;
   margin-top: 40px;
   cursor: pointer;
-  transform: all 250ms;
+  transition: all 250ms;
 
   &:hover {
     transform: scale(1.08);

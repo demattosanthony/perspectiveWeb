@@ -44,6 +44,7 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 
   @media (max-width: 768px) {
     flex-direction: column;

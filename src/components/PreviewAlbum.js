@@ -73,7 +73,7 @@ const Wrap = styled.div`
   -webkit-box-shadow: 5px 4px 15px 5px rgba(0, 0, 0, 0.11);
   box-shadow: 5px 4px 15px 5px rgba(0, 0, 0, 0.11);
   cursor: pointer;
-  transform: all 250ms ease;
+  transition: all 250ms;
 
   img {
     width: 100%;
@@ -90,6 +90,17 @@ const Wrap = styled.div`
     text-decoration: none;
     color: black;
   }
+
+  @media (max-width: 425px) {
+    width: 150px;
+    height: 185px;
+
+    img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+    }
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -105,5 +116,12 @@ const TitleContainer = styled.div`
     margin: 5px;
     background: url(https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif)
       no-repeat center;
+  }
+
+  @media (max-width: 425px) {
+    img {
+      height: 30px;
+      width: 30px;
+    }
   }
 `;

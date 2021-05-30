@@ -30,9 +30,11 @@ function Profile() {
           </ProfileImg>
           <NameContainer>{data.name}</NameContainer>
           <UsernameContainer>@{data.username}</UsernameContainer>
-          <MyAccountBtn>My Account</MyAccountBtn>
-          <SettingsBtn>Settings</SettingsBtn>
-          <LogOutBtn onClick={signOut}>Log Out</LogOutBtn>
+          <Buttons>
+            <MyAccountBtn>My Account</MyAccountBtn>
+            <SettingsBtn>Settings</SettingsBtn>
+            <LogOutBtn onClick={signOut}>Log Out</LogOutBtn>
+          </Buttons>
         </>
       )}
     </Container>
@@ -51,7 +53,7 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 525px;
+    height: auto;
   }
 `;
 
@@ -78,6 +80,18 @@ const UsernameContainer = styled.div`
   color: #808080;
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;
+
 const MyAccountBtn = styled.div`
   height: 20px;
   width: 110px;
@@ -92,11 +106,17 @@ const MyAccountBtn = styled.div`
   -webkit-box-shadow: 5px 4px 15px 5px rgba(0, 0, 0, 0.11);
   box-shadow: 5px 4px 15px 5px rgba(0, 0, 0, 0.11);
   cursor: pointer;
-  transform: all 250ms;
+  transition: all 250ms;
+  margin-left: 5px;
+  margin-right: 5px;
 
   &:hover {
     transform: scale(1.06);
     border-color: rgba(249, 249, 249, 0.8);
+  }
+
+  @media (max-width: 425px) {
+    width: 90px;
   }
 `;
 

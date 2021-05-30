@@ -46,8 +46,12 @@ const ImagesGrid = styled.div`
   align-items: center;
   justify-items: center;
 
-  @media (max-width: 576px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (max-width: 805px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (max-width: 610px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (min-width: 1200px) {
@@ -78,5 +82,12 @@ const ImageContainer = styled.div`
     object-fit: cover;
     background: url(https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif)
       no-repeat center;
+  }
+
+  @media (max-width: 610px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    height: 150px;
+    width: 150px;
   }
 `;

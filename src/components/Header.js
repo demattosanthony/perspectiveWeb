@@ -68,4 +68,8 @@ const CreateAlbumBtn = styled.div`
     transform: scale(1.06);
     border-color: rgba(249, 249, 249, 0.8);
   }
+
+  @media (max-width: 425px) {
+    font-size: 14px;
+  }
 `;

@@ -40,12 +40,11 @@ function MyAlbums() {
 export default MyAlbums;
 
 const Container = styled.div`
-  @media (max-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const Title = styled.div`
@@ -54,6 +53,12 @@ const Title = styled.div`
   font-weight: bold;
   font-family: "LeftistMonoSerif";
   letter-spacing: 2px;
+  display: flex;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    margin-left: 70px;
+  }
 `;
 
 const NoAlbums = styled.div`
@@ -64,15 +69,28 @@ const NoAlbums = styled.div`
 
 const Content = styled.div`
   margin-top: 20px;
+  margin-bottom: 50px;
   display: grid;
   grid-gap: 35px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
-  @media (max-width: 576px) {
+  @media (max-width: 900px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @media (max-width: 760px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 637px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1120px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1330px) {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 

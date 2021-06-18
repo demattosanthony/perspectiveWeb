@@ -13,5 +13,7 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const appleSignInProvider = new firebase.auth.OAuthProvider("apple.com");
+const googleSignInProvider = new firebase.auth.GoogleAuthProvider();
 
-export { auth };
+export { auth, appleSignInProvider, googleSignInProvider };

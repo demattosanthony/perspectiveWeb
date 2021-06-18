@@ -41,14 +41,10 @@ function Home() {
 export default Home;
 
 const Container = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 `;
 
 const BodyContainer = styled.div`

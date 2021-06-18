@@ -44,7 +44,6 @@ function Profile() {
 export default Profile;
 
 const Container = styled.div`
-  /* background-color: orange; */
   width: 275px;
   height: 100%;
   display: flex;
@@ -53,7 +52,7 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: auto;
+    min-height: 350px;
   }
 `;
 

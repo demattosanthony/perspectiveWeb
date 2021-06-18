@@ -35,8 +35,8 @@ function AlbumView() {
 export default AlbumView;
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh;
+  width: 100vw; */
 `;
 
 const ImagesGrid = styled.div`

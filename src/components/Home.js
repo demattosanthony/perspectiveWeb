@@ -25,7 +25,7 @@ function Home() {
         );
       }
     });
-  }, []);
+  }, [history, dispatch]);
 
   return (
     <Container>

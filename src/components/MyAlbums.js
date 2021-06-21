@@ -42,7 +42,7 @@ export default MyAlbums;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   width: 100%;
   min-height: fit-content;
@@ -63,8 +63,8 @@ const Title = styled.div`
 `;
 
 const NoAlbums = styled.div`
-  margin-top: 25px;
-  font-size: 22px;
+  margin-top: 50px;
+  font-size: 30px;
   font-family: "LeftistMonoSerif";
 `;
 

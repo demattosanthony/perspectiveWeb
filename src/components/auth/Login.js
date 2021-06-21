@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { auth, appleSignInProvider, googleSignInProvider } from "../firebase";
-import { setUserLogin } from "../features/user/userSlice";
+import {
+  auth,
+  appleSignInProvider,
+  googleSignInProvider,
+} from "../../firebase";
+import { setUserLogin } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
+import axios from "../../axios";
 
 import DividerWithText from "./DividerWithText";
+import TextField from "../TextField";
+import Logo from "./Logo";
+import ForgotPasswordPopUp from "./ForgotPasswordPopUp";
 
 function Login() {
   const dispatch = useDispatch();
@@ -14,6 +22,8 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showForgotPasswordPopUp, setShowForgotPasswordPopUp] = useState(false);
 
   const signIn = () => {
     auth.signInWithEmailAndPassword(email, password).then((result) => {
@@ -29,9 +39,26 @@ function Login() {
     });
   };
 
-  const appleSignIn = () => {
-    auth.signInWithPopup(appleSignInProvider).then((result) => {
+  const appleSignIn = async () => {
+    auth.signInWithPopup(appleSignInProvider).then(async (result) => {
       let user = result.user;
+
+      const req = await axios.get(`checkUserExists/${user.email}`);
+      // If they are not a user yet, sign them up
+      if (req.data === false) {
+        console.log("not a user");
+        const newUser = {
+          userId: user.uid,
+          username: user.uid,
+          name: user.displayName,
+          email: user.email,
+          profileImgUrl: user.photoURL,
+        };
+        await axios.post(`adduser`, newUser);
+      } else {
+        console.log("already a user");
+      }
+
       dispatch(
         setUserLogin({
           userId: user.uid,
@@ -42,9 +69,24 @@ function Login() {
     });
   };
 
-  const googleSignIn = () => {
-    auth.signInWithPopup(googleSignInProvider).then((result) => {
+  const googleSignIn = async () => {
+    auth.signInWithPopup(googleSignInProvider).then(async (result) => {
+      console.log(result);
       let user = result.user;
+      console.log(user);
+
+      const req = await axios.get(`checkUserExists/${user.email}`);
+      // If they are not a user yet, sign them up
+      if (req.data === false) {
+        const newUser = {
+          userId: user.uid,
+          username: user.uid,
+          name: user.displayName,
+          email: user.email,
+          profileImgUrl: user.photoURL,
+        };
+        await axios.post(`adduser`, newUser);
+      }
       dispatch(
         setUserLogin({
           userId: user.uid,
@@ -58,18 +100,15 @@ function Login() {
   return (
     <Container>
       <Card>
-        <Logo>
-          <img src="/app_logo.png" />
-          <h1>Perspective Albums</h1>
-        </Logo>
+        <Logo />
 
         <Form>
-          <EmailTextField
+          <TextField
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <PasswordTextField
+          <TextField
             placeholder="Password"
             type="password"
             value={password}
@@ -77,11 +116,19 @@ function Login() {
           />
         </Form>
 
+        <ForgotPasswordBtn
+          onClick={() => setShowForgotPasswordPopUp(!showForgotPasswordPopUp)}
+        >
+          Forgot Password?
+        </ForgotPasswordBtn>
+
         <LoginButton onClick={signIn}>Login</LoginButton>
 
         <DividerWithText />
 
-        <RegisterButton>Register</RegisterButton>
+        <Link to={"/register"}>
+          <RegisterButton>Register</RegisterButton>
+        </Link>
 
         <AppleSignInButton onClick={appleSignIn}>
           <img src="appleSignIn.png" alt="" />
@@ -91,9 +138,14 @@ function Login() {
           <img src="googleSignIn.png" alt="" />
         </GoogleSignInButton>
 
-        {/* <FacebookSignInButton>
-          <img src="facebookSignIn.png" alt="" />
-        </FacebookSignInButton> */}
+        {showForgotPasswordPopUp && (
+          <ForgotPasswordPopUp
+            open={showForgotPasswordPopUp}
+            handleClose={() =>
+              setShowForgotPasswordPopUp(!showForgotPasswordPopUp)
+            }
+          />
+        )}
       </Card>
     </Container>
   );
@@ -107,6 +159,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  overflow-y: scroll;
 `;
 
 const Card = styled.div`
@@ -125,53 +178,14 @@ const Card = styled.div`
   -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
 
   @media (max-width: 1100px) {
-    width: 70%;
+    width: 60%;
+
+    @media (max-width: 768px) {
+      width: 70%;
+    }
 
     @media (max-width: 568px) {
       width: 90%;
-    }
-  }
-`;
-
-const Logo = styled.div`
-  /* margin-top: 100px; */
-  max-width: 650px;
-  height: 200px;
-  display: flex;
-  align-items: center;
-
-  img {
-    height: 75px;
-    width: 75;
-    padding: 0px 30px;
-  }
-
-  h1 {
-    font-family: "Billabong2";
-    font-size: 75px;
-    font-weight: 100;
-  }
-  @media (max-width: 1200px) {
-    h1 {
-      font-size: 65px;
-    }
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 55px;
-      }
-
-      @media (max-width: 630px) {
-        font-size: 50px;
-
-        img {
-          height: 60px;
-          width: 60px;
-          padding: 0px 30px;
-        }
-        h1 {
-          font-size: 50px;
-        }
-      }
     }
   }
 `;
@@ -183,28 +197,19 @@ const Form = styled.div`
   align-items: center;
 `;
 
-const EmailTextField = styled.input`
-  width: 350px;
-  padding: 5px;
-  margin: 10px;
-  font-size: 18px;
-  border-radius: 6px;
-  border: 1px solid #d3d3d3;
+const ForgotPasswordBtn = styled.div`
+  margin-left: 230px;
+  color: #438afe;
+  padding: 3px;
+  transition: all 20ms;
+  font-size: 14px;
+  border-radius: 4px;
 
-  @media (max-width: 900px) {
-    width: 300px;
-
-    @media (max-width: 768px) {
-      width: 250px;
-    }
-
-    @media (max-width: 560px) {
-      width: 200px;
-    }
+  &:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
   }
 `;
-
-const PasswordTextField = styled(EmailTextField)``;
 
 const LoginButton = styled.button`
   background-color: #438afe;
@@ -250,7 +255,4 @@ const AppleSignInButton = styled.div`
 
 const GoogleSignInButton = styled(AppleSignInButton)`
   margin-bottom: 40px;
-`;
-const FacebookSignInButton = styled(AppleSignInButton)`
-  margin-bottom: 30px;
 `;

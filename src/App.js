@@ -2,7 +2,8 @@ import React from "react";
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import Login from "./components/Login";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 import Home from "./components/Home";
 import AlbumView from "./components/albumViewComponents/AlbumView";
 import ImageView from "./components/albumViewComponents/ImageView";
@@ -23,6 +24,9 @@ function App() {
               </Route>
               <Route path="/album/:albumId/:title">
                 <AlbumView />
+              </Route>
+              <Route path="/register">
+                <Register />
               </Route>
               <Route path="/login">
                 <Login />

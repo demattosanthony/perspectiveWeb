@@ -5,7 +5,7 @@ function Header() {
   return (
     <Container>
       <Logo>
-        <img src="/app_logo.png" />
+        <img src="/app_logo.png" alt="" />
         <h1>Perspective Albums</h1>
       </Logo>
 

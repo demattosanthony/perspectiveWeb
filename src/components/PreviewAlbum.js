@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import axios from "../axios";
@@ -6,7 +6,7 @@ import Fade from "react-reveal/Fade";
 import { Link } from "react-router-dom";
 
 function PreviewAlbum({ albumId, title, profileImgUrl }) {
-  const [image, setImage] = useState("");
+  // const [image, setImage] = useState("");
 
   const { data, status } = useQuery(
     `getFirstAlbumImage/${albumId}`,

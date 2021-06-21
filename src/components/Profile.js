@@ -26,7 +26,7 @@ function Profile() {
       {status === "success" && (
         <>
           <ProfileImg>
-            <img src={data.profile_img_url} />
+            <img src={data.profile_img_url} alt="" />
           </ProfileImg>
           <NameContainer>{data.name}</NameContainer>
           <UsernameContainer>@{data.username}</UsernameContainer>

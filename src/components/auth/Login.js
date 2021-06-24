@@ -160,6 +160,10 @@ const Container = styled.div`
   flex-direction: column;
   height: 100vh;
   overflow-y: scroll;
+
+  @media (max-width: 468px) {
+    justify-content: start;
+  }
 `;
 
 const Card = styled.div`

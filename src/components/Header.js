@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
+import CreateAlbumDialog from "./CreateAlbumDialog";
+
 function Header() {
+  const [showCreateAlbumDialog, setShowCreateAlbumDialog] = useState(false);
+
   return (
     <Container>
       <Logo>
@@ -9,7 +13,16 @@ function Header() {
         <h1>Perspective Albums</h1>
       </Logo>
 
-      <CreateAlbumBtn>Create Album +</CreateAlbumBtn>
+      <CreateAlbumBtn onClick={() => setShowCreateAlbumDialog(true)}>
+        Create Album +
+      </CreateAlbumBtn>
+
+      {showCreateAlbumDialog && (
+        <CreateAlbumDialog
+          open={showCreateAlbumDialog}
+          handleClose={() => setShowCreateAlbumDialog(!showCreateAlbumDialog)}
+        />
+      )}
     </Container>
   );
 }

@@ -29,6 +29,7 @@ function MyAlbums() {
                 title={album.title}
                 albumId={album.album_id}
                 profileImgUrl={album.profile_img_url}
+                ownerId={album.ownerid}
               />
             ))}
           </Content>

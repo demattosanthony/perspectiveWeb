@@ -1,12 +1,26 @@
-import React, {  } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import axios from "../axios";
 import Fade from "react-reveal/Fade";
 import { Link } from "react-router-dom";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import IconButton from "@material-ui/core/IconButton";
+import AlbumMenu from "./AlbumMenu";
 
-function PreviewAlbum({ albumId, title, profileImgUrl }) {
+function PreviewAlbum({ albumId, title, profileImgUrl, ownerId }) {
   // const [image, setImage] = useState("");
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const { data, status } = useQuery(
     `getFirstAlbumImage/${albumId}`,
@@ -16,23 +30,6 @@ function PreviewAlbum({ albumId, title, profileImgUrl }) {
       return request.data;
     }
   );
-
-  // useEffect(() => {
-  //   if (data !== undefined) {
-  //     var i = 1;
-
-  //     function myLoop() {
-  //       setTimeout(function () {
-  //         if (data[i] != undefined) setImage(data[i].photo_url);
-  //         i++;
-
-  //         myLoop();
-  //       }, 6000);
-  //     }
-
-  //     myLoop();
-  //   }
-  // }, [data]);
 
   return (
     <Container>
@@ -45,13 +42,34 @@ function PreviewAlbum({ albumId, title, profileImgUrl }) {
                   src={data === "" ? "/album_logo.jpg" : data.photo_url}
                   alt=""
                 />
+              </Link>
 
+              <DescContainer>
                 <TitleContainer>
                   <img src={profileImgUrl} alt="" />
 
                   {title}
                 </TitleContainer>
-              </Link>
+
+                <IconButton
+                  aria-label="more"
+                  aria-controls="long-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+
+                {open && (
+                  <AlbumMenu
+                    open={open}
+                    handleClose={handleClose}
+                    anchorEl={anchorEl}
+                    albumId={albumId}
+                    ownerId={ownerId}
+                  />
+                )}
+              </DescContainer>
             </Wrap>
           </Fade>
         </>
@@ -72,10 +90,11 @@ const Wrap = styled.div`
   overflow: hidden;
   -webkit-box-shadow: 5px 4px 15px 5px rgba(0, 0, 0, 0.11);
   box-shadow: 5px 4px 15px 5px rgba(0, 0, 0, 0.11);
-  cursor: pointer;
+
   transition: all 250ms;
 
   img {
+    cursor: pointer;
     width: 100%;
     height: 165px;
     object-fit: cover;
@@ -103,6 +122,11 @@ const Wrap = styled.div`
   }
 `;
 
+const DescContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -110,6 +134,7 @@ const TitleContainer = styled.div`
   height: 45px;
 
   img {
+    cursor: text;
     height: 35px;
     width: 35px;
     border-radius: 100px;

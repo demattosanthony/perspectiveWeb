@@ -1,31 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import Profile from "./Profile";
 import MyAlbums from "./MyAlbums";
-import { auth } from "../firebase";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUserLogin } from "../features/user/userSlice";
 
 function Home() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      if (!user) {
-        history.push("/login");
-      } else {
-        dispatch(
-          setUserLogin({
-            userId: user.uid,
-            email: user.email,
-          })
-        );
-      }
-    });
-  }, [history, dispatch]);
 
   return (
     <Container>

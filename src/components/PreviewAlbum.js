@@ -9,8 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 import AlbumMenu from "./AlbumMenu";
 
 function PreviewAlbum({ albumId, title, profileImgUrl, ownerId }) {
-  // const [image, setImage] = useState("");
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 

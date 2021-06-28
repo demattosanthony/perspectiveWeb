@@ -1,30 +1,16 @@
-import React, { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
 import { auth } from "./firebase";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-  useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      if (!user) {
-        setIsLoggedIn(false);
-      } else {
-        setIsLoggedIn(true);
-      }
-    });
-  }, []);
-
+const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) =>
-        isLoggedIn ? (
-          <Component />
+      render={(routeProps) =>
+        auth.currentUser ? (
+          <RouteComponent {...routeProps} />
         ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
+          <Redirect to={"/login"} />
         )
       }
     />

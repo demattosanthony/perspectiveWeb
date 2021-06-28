@@ -15,9 +15,11 @@ export default Logo;
 const Container = styled.div`
   /* margin-top: 100px; */
   max-width: 650px;
-  height: 200px;
+  height: 100px;
   display: flex;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
   img {
     height: 75px;

@@ -7,8 +7,6 @@ import {
   appleSignInProvider,
   googleSignInProvider,
 } from "../../firebase";
-import { setUserLogin } from "../../features/user/userSlice";
-import { useDispatch } from "react-redux";
 import axios from "../../axios";
 
 import DividerWithText from "./DividerWithText";
@@ -17,7 +15,6 @@ import Logo from "./Logo";
 import ForgotPasswordPopUp from "./ForgotPasswordPopUp";
 
 function Login() {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const [email, setEmail] = useState("");
@@ -26,15 +23,10 @@ function Login() {
   const [showForgotPasswordPopUp, setShowForgotPasswordPopUp] = useState(false);
 
   const signIn = () => {
+    console.log(`loggin in ${email} ${password}`);
     auth.signInWithEmailAndPassword(email, password).then((result) => {
-      let user = result.user;
+      // let user = result.user;
 
-      dispatch(
-        setUserLogin({
-          userId: user.uid,
-          email: user.email,
-        })
-      );
       history.push("/");
     });
   };
@@ -59,12 +51,6 @@ function Login() {
         console.log("already a user");
       }
 
-      dispatch(
-        setUserLogin({
-          userId: user.uid,
-          email: user.email,
-        })
-      );
       history.push("/");
     });
   };
@@ -87,12 +73,7 @@ function Login() {
         };
         await axios.post(`adduser`, newUser);
       }
-      dispatch(
-        setUserLogin({
-          userId: user.uid,
-          email: user.email,
-        })
-      );
+
       history.push("/");
     });
   };

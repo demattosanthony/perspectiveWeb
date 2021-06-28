@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, storageRef } from "../../firebase";
 import axios from "../../axios";
 
 import Logo from "./Logo";
 import TextField from "../TextField";
+import UploadImage from "../UploadImage";
 
 function Register() {
   const history = useHistory();
@@ -14,9 +15,27 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [localProfileImgUrl, setLocalProfileImgUrl] = useState("");
+  const [profileImgFile, setProfileImgFile] = useState("");
+  // const [profileImgUrl, setProfileImgUrl] = useState("");
 
-  const signUp = () => {
-    auth
+  const uploadProfileImg = async () => {
+    if (profileImgFile !== "") {
+      await storageRef
+        .child(`user_profile_images/${profileImgFile.name}`)
+        .put(profileImgFile);
+      var downloadUrl = await storageRef
+        .child(`user_profile_images/${profileImgFile.name}`)
+        .getDownloadURL();
+      return downloadUrl;
+    } else {
+      return "";
+    }
+  };
+
+  const signUp = async (url) => {
+    console.log(url);
+    await auth
       .createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
         let user = result.user;
@@ -26,9 +45,11 @@ function Register() {
           username: username,
           name: name,
           email: email,
-          profileImgUrl: "",
+          profileImgUrl: url,
         };
         await axios.post(`addUser`, newUser);
+
+        await auth.signInWithEmailAndPassword(email, password);
 
         history.push("/");
       });
@@ -38,6 +59,21 @@ function Register() {
     <Container>
       <Card>
         <Logo />
+        <ProfileImage>
+          {localProfileImgUrl !== "" ? (
+            <img src={localProfileImgUrl} alt="" />
+          ) : (
+            <img src="profile_icon.png" alt="" />
+          )}
+
+          <Upload>
+            <UploadImage
+              setProfileImgUrl={setLocalProfileImgUrl}
+              setProfileImgFile={setProfileImgFile}
+            />
+          </Upload>
+        </ProfileImage>
+
         <TextField
           placeholder="Full Name"
           value={name}
@@ -60,7 +96,14 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <RegisterButton onClick={signUp}>Register</RegisterButton>
+        <RegisterButton
+          onClick={async () => {
+            var url = await uploadProfileImg();
+            await signUp(url);
+          }}
+        >
+          Register
+        </RegisterButton>
       </Card>
     </Container>
   );
@@ -105,6 +148,25 @@ const Card = styled.div`
   }
 `;
 
+const ProfileImage = styled.div`
+  height: 110px;
+  width: 115px;
+  position: relative;
+  margin-bottom: 20px;
+
+  img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+  }
+`;
+
+const Upload = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
+
 const RegisterButton = styled.button`
   background-color: #438afe;
   color: white;
@@ -112,7 +174,7 @@ const RegisterButton = styled.button`
   border: none;
   padding: 10px;
   border-radius: 4px;
-  margin-top: 20px;
+  margin-top: 30px;
   cursor: pointer;
   transition: all 250ms;
   width: 200px;

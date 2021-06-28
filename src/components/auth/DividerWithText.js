@@ -3,10 +3,10 @@ import "./divider.css";
 
 function DividerWithText() {
   return (
-    <div class="divider">
-      <hr class="left" />
+    <div className="divider">
+      <hr className="left" />
       OR
-      <hr class="right" />
+      <hr className="right" />
     </div>
   );
 }

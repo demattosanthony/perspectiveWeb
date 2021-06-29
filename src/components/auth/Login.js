@@ -13,6 +13,7 @@ import DividerWithText from "./DividerWithText";
 import TextField from "../TextField";
 import Logo from "./Logo";
 import ForgotPasswordPopUp from "./ForgotPasswordPopUp";
+import AlertDialog from "../AlertDialog";
 
 function Login() {
   const history = useHistory();
@@ -20,15 +21,23 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState("");
+
   const [showForgotPasswordPopUp, setShowForgotPasswordPopUp] = useState(false);
 
   const signIn = () => {
-    console.log(`loggin in ${email} ${password}`);
-    auth.signInWithEmailAndPassword(email, password).then((result) => {
-      // let user = result.user;
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        // let user = result.user;
 
-      history.push("/");
-    });
+        history.push("/");
+      })
+      .catch((e) => {
+        setAlertContent(e.toString());
+        setShowAlert(true);
+      });
   };
 
   const appleSignIn = async () => {
@@ -38,7 +47,6 @@ function Login() {
       const req = await axios.get(`checkUserExists/${user.email}`);
       // If they are not a user yet, sign them up
       if (req.data === false) {
-        console.log("not a user");
         const newUser = {
           userId: user.uid,
           username: user.uid,
@@ -57,10 +65,8 @@ function Login() {
 
   const googleSignIn = async () => {
     auth.signInWithPopup(googleSignInProvider).then(async (result) => {
-      console.log(result);
       let user = result.user;
-      console.log(user);
-
+          
       const req = await axios.get(`checkUserExists/${user.email}`);
       // If they are not a user yet, sign them up
       if (req.data === false) {
@@ -127,6 +133,14 @@ function Login() {
             }
           />
         )}
+
+        {showAlert && (
+          <AlertDialog
+            open={showAlert}
+            handleClose={() => setShowAlert(!showAlert)}
+            title={alertContent}
+          />
+        )}
       </Card>
     </Container>
   );
@@ -144,6 +158,7 @@ const Container = styled.div`
 
   @media (max-width: 468px) {
     justify-content: start;
+    margin-top: 50px;
   }
 `;
 

@@ -5,7 +5,6 @@ import Profile from "./Profile";
 import MyAlbums from "./MyAlbums";
 
 function Home() {
-
   return (
     <Container>
       <Header />

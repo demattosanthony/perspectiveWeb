@@ -8,8 +8,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useQueryClient, useMutation } from "react-query";
-import axios from "../axios";
-import { auth } from "../firebase";
+import axios from "../../axios";
+import { auth } from "../../firebase";
 
 function CreateAlbumDialog({ open, handleClose }) {
   const queryClient = useQueryClient();

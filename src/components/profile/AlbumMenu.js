@@ -2,8 +2,8 @@ import React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useMutation, useQueryClient } from "react-query";
-import axios from "../axios";
-import { auth } from "../firebase";
+import axios from "../../axios";
+import { auth } from "../../firebase";
 
 const options = ["Delete"];
 
@@ -43,7 +43,6 @@ export default function AlbumMenu({
         {options.map((option) => (
           <MenuItem
             key={option}
-            // selected={option === "Pyxis"}
             onClick={() => {
               deleteAlbumMutation.mutate({
                 isOwner: auth.currentUser.uid === ownerId ? "true" : "false",

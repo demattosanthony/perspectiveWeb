@@ -38,7 +38,7 @@ export default function FormDialog({ open, handleClose }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={sendForgotPasswordLink} color="#438afe">
+          <Button onClick={sendForgotPasswordLink} style={{ color: "#438afe" }}>
             Send
           </Button>
         </DialogActions>

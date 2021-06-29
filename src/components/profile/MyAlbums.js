@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "../axios";
+import axios from "../../axios";
 import { useQuery } from "react-query";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 import PreviewAlbum from "./PreviewAlbum";
 

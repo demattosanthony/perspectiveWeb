@@ -36,12 +36,12 @@ const Container = styled.div`
     h1 {
       font-size: 65px;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 835px) {
       h1 {
         font-size: 55px;
       }
 
-      @media (max-width: 630px) {
+      @media (max-width: 635px) {
         font-size: 50px;
 
         img {

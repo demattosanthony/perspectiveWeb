@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
-import axios from "../axios";
+import axios from "../../axios";
 import Fade from "react-reveal/Fade";
 import { Link } from "react-router-dom";
 import MoreVertIcon from "@material-ui/icons/MoreVert";

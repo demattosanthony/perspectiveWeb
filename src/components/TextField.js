@@ -22,15 +22,11 @@ const TextField2 = styled.input`
   border-radius: 6px;
   border: 1px solid #d3d3d3;
 
-  @media (max-width: 900px) {
+  @media (max-width: 768px) {
     width: 300px;
+  }
 
-    @media (max-width: 768px) {
-      width: 250px;
-    }
-
-    @media (max-width: 560px) {
-      width: 250px;
-    }
+  @media (max-width: 560px) {
+    width: 250px;
   }
 `;

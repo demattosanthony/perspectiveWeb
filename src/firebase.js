@@ -17,8 +17,6 @@ const appleSignInProvider = new firebase.auth.OAuthProvider("apple.com");
 const googleSignInProvider = new firebase.auth.GoogleAuthProvider();
 const storageRef = firebase.storage().ref();
 
-
-
 export {
   auth,
   appleSignInProvider,

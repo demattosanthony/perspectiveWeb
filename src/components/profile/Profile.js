@@ -26,7 +26,11 @@ function Profile() {
       {status === "success" && (
         <>
           <ProfileImg>
-            <img src={data.profile_img_url} alt="" />
+            {data.profile_img_url !== "" ? (
+              <img src={data.profile_img_url} alt="" />
+            ) : (
+              <img src="profile_icon.png" alt="" />
+            )}
           </ProfileImg>
           <NameContainer>{data.name}</NameContainer>
           <UsernameContainer>@{data.username}</UsernameContainer>

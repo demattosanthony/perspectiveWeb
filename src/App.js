@@ -19,12 +19,13 @@ function App() {
         <AuthProvider>
           <Router>
             <Switch>
-              <Route path="/image/">
-                <ImageView />
-              </Route>
-              <Route path="/album/:albumId/:title">
-                <AlbumView />
-              </Route>
+              <PrivateRoute exact path="/image/" component={ImageView} />
+
+              <PrivateRoute
+                exact
+                path="/album/:albumId/:title"
+                component={AlbumView}
+              />
               <Route path="/register">
                 <Register />
               </Route>

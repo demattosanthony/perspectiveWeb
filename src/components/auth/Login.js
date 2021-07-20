@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -8,12 +8,15 @@ import {
   googleSignInProvider,
 } from "../../firebase";
 import axios from "../../axios";
+import { Redirect } from "react-router-dom";
 
 import DividerWithText from "./DividerWithText";
 import TextField from "../TextField";
 import Logo from "./Logo";
 import ForgotPasswordPopUp from "./ForgotPasswordPopUp";
 import AlertDialog from "../AlertDialog";
+
+import { AuthContext } from "../../AuthProvider";
 
 function Login() {
   const history = useHistory();
@@ -26,7 +29,7 @@ function Login() {
 
   const [showForgotPasswordPopUp, setShowForgotPasswordPopUp] = useState(false);
 
-  const signIn = () => {
+  const signIn = async () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -66,7 +69,7 @@ function Login() {
   const googleSignIn = async () => {
     auth.signInWithPopup(googleSignInProvider).then(async (result) => {
       let user = result.user;
-          
+
       const req = await axios.get(`checkUserExists/${user.email}`);
       // If they are not a user yet, sign them up
       if (req.data === false) {
@@ -83,6 +86,12 @@ function Login() {
       history.push("/");
     });
   };
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container>

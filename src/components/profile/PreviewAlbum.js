@@ -44,7 +44,11 @@ function PreviewAlbum({ albumId, title, profileImgUrl, ownerId }) {
 
               <DescContainer>
                 <TitleContainer>
-                  <img src={profileImgUrl} alt="" />
+                  {profileImgUrl !== "" ? (
+                    <img src={profileImgUrl} alt="" />
+                  ) : (
+                    <img src="profile_icon.png" alt="" />
+                  )}
 
                   {title}
                 </TitleContainer>

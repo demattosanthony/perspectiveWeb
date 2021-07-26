@@ -1,21 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { GoogleDriveBtn } from "../../styles/buttons";
 import UploadImagesButton from "./UploadImagesButton";
+import ShareDialog from "./ShareDialog";
 
 function AlbumHeader({ title }) {
+  const [showShareDialog, setShareDialog] = useState(false);
+
   return (
     <Container>
       <Title>{title}</Title>
 
       <ButtonsContainer>
-        <GoogleDriveBtn height="35px" width="70px">
+        <GoogleDriveBtn
+          height="35px"
+          width="70px"
+          fontSize="16px"
+          onClick={() => setShareDialog(true)}
+        >
           Share
         </GoogleDriveBtn>
 
         <UploadImagesButton />
       </ButtonsContainer>
+
+      {showShareDialog && (
+        <ShareDialog
+          open={showShareDialog}
+          handleClose={() => setShareDialog(false)}
+        />
+      )}
     </Container>
   );
 }

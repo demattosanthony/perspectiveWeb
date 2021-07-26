@@ -11,15 +11,10 @@ const firebaseConfig = {
   measurementId: "G-RQ16JDKMY8",
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const appleSignInProvider = new firebase.auth.OAuthProvider("apple.com");
 const googleSignInProvider = new firebase.auth.GoogleAuthProvider();
 const storageRef = firebase.storage().ref();
 
-export {
-  auth,
-  appleSignInProvider,
-  googleSignInProvider,
-  storageRef,
-};
+export { auth, appleSignInProvider, googleSignInProvider, storageRef };

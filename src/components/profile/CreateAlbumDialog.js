@@ -6,6 +6,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import { theme } from "../../styles/theme";
 
 import { useQueryClient, useMutation } from "react-query";
 import axios from "../../axios";
@@ -32,15 +34,17 @@ function CreateAlbumDialog({ open, handleClose }) {
       >
         <DialogTitle id="form-dialog-title">Enter Album Title</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="title"
-            label="Album Title"
-            fullWidth
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <MuiThemeProvider theme={theme}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="title"
+              label="Album Title"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </MuiThemeProvider>
         </DialogContent>
         <DialogActions>
           <Button

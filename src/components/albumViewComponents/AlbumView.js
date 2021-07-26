@@ -33,7 +33,7 @@ function AlbumView() {
     <Container>
       {loading && (
         <MuiThemeProvider theme={theme}>
-          <LinearProgress color="secondary" />
+          <LinearProgress />
         </MuiThemeProvider>
       )}
 
